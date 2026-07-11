@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Withdraw Funds — Banking App{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <div class="container">
+    <a href="/dashboard" class="navbar-brand">🏦 Banking App</a>
+    <div class="ms-auto">
+      <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-12 col-sm-10 col-md-6 col-lg-5">
+
+    <div class="card">
+      <div class="card-body p-4">
+        <h2 class="card-title h5 mb-1 text-center">
+          － Withdraw Funds
+        </h2>
+
+        <!-- Available balance hint -->
+        {% if balance is defined %}
+          <p class="text-center text-muted small mb-4">
+            Available balance: <strong>${{ "%.2f"|format(balance) }}</strong>
+          </p>
+        {% endif %}
+
+        <!-- Flash messages (validation errors) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/withdraw" method="POST" novalidate>
+          <div class="mb-4">
+            <label for="amount" class="form-label fw-semibold">Amount ($)</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              class="form-control form-control-lg"
+              placeholder="0.00"
+              min="0.01"
+              step="0.01"
+              {% if balance is defined %}max="{{ balance }}"{% endif %}
+              required
+            />
+            <div class="form-text">Enter an amount up to your available balance.</div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-warning btn-lg text-dark">Confirm Withdrawal</button>
+            <a href="/dashboard" class="btn btn-outline-secondary">Back to Dashboard</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

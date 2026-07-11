@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Login — Banking App{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-12 col-sm-10 col-md-6 col-lg-5">
+
+    <!-- App title -->
+    <h1 class="text-center mb-4 fw-bold text-primary">
+      🏦 Banking App
+    </h1>
+
+    <div class="card">
+      <div class="card-body p-4">
+        <h2 class="card-title h5 mb-4 text-center text-secondary">
+          Sign in to your account
+        </h2>
+
+        <!-- Flash messages (login errors) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Login form -->
+        <form action="/login" method="POST" novalidate>
+          <div class="mb-3">
+            <label for="username" class="form-label fw-semibold">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              placeholder="Enter your username"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Login
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <p class="text-center text-muted mt-3" style="font-size: 0.85rem;">
+      Demo credentials — username: <strong>john_doe</strong> &nbsp;|&nbsp; password: <strong>password123</strong>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

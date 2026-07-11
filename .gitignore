@@ -1,0 +1,26 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+BACKEND/venv/
+venv/
+env/
+
+# SQLite database (runtime artefact - never commit)
+BACKEND/banking.db
+*.db
+
+# pytest cache
+.pytest_cache/
+BACKEND/.pytest_cache/
+
+# Bob internal config
+.bob/
+
+# OS artefacts
+.DS_Store
+Thumbs.db

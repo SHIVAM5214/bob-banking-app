@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Banking App{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+  <div class="container">
+    <span class="navbar-brand">🏦 Banking App</span>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span class="text-white-50 small">Welcome, <strong class="text-white">{{ full_name }}</strong></span>
+      <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-3">
+  <div class="col-12 col-md-8 col-lg-6">
+
+    <!-- Flash messages from deposit / withdraw -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Balance card -->
+    <div class="card mb-4">
+      <div class="card-body text-center py-5">
+        <p class="text-muted mb-1 small text-uppercase tracking-wide">Current Balance</p>
+        <p class="balance-display mb-0">${{ "%.2f"|format(balance) }}</p>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="row g-3">
+      <div class="col-6">
+        <a href="/deposit" class="btn btn-success btn-lg w-100">
+          ＋ Deposit
+        </a>
+      </div>
+      <div class="col-6">
+        <a href="/withdraw" class="btn btn-warning btn-lg w-100 text-dark">
+          － Withdraw
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
